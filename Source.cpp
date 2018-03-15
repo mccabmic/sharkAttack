@@ -1,75 +1,45 @@
 #include <iostream>
 #include "item.hpp"
+#include "Space.hpp"
+
+
+std::string look(Space*);
 
 using namespace std;
 
 int main() {
 
-	// Dummy ID
-	item shield;
-	shield.ezID = "shield";
+	item myStaff;
+	myStaff.description = "A cracked staff";
+	myStaff.ezID = "A staff";
 
-	// Sword Full ID
-	item sword;
-	sword.ezID = "sword";
-	sword.description = "a rusty sword";
-	sword.longDescription = "This blade's shimmer has been dulled after years of use. It is chipped and rusted.";
+	Space mySpace;
+	Space myOtherSpace("A different room", "this room smells like wet dogs and awful people");
 
-	// Staff Full ID
-	item staff;
-	staff.ezID = "staff";
-	staff.description = "a cracked staff";
-	staff.longDescription = "The cracked and gnarled wood on this staff looks infected.";
-	
-	// Construct a wallet of size 10
-	wallet myStuff = wallet(10);
-	
-	myStuff.addToWallet(sword);
-	myStuff.addToWallet(staff);
-	
-	cout << "Items added to wallet" << endl;
-	cout << "Testing search:";
-	myStuff.search(sword);
-	myStuff.search(shield);
+	// Set these fuckers
+	mySpace.left = &myOtherSpace;
+	myOtherSpace.right = &mySpace;
 
-	cout << "My contents: ";
-	myStuff.printContents();
+	//Right now, picture a top down view where you can see literally all the rooms
+	cout << look(mySpace.left) << endl;
+	cout << look(mySpace.right) << endl;
 
-	wallet hisStuff = wallet();
+	// This will probably need to be a function as part of the mapbuilding
+	myOtherSpace.roomContents.addToWallet(myStaff);
 
-	cout << "His contents: ";
-	hisStuff.printContents();
-
-	cout << "He attempts to steal...";
-	hisStuff.grab(sword, myStuff);
-
-	cout << "My contents: ";
-	myStuff.printContents();
-	myStuff.search(sword);
-
-	cout << "His contents: ";
-	hisStuff.printContents();
-
-	cout << "He attempts to steal...";
-	hisStuff.grab(sword, myStuff);
-
-	cout << "My contents: ";
-	myStuff.printContents();
-	myStuff.search(sword);
-
-	cout << "His contents: ";
-	hisStuff.printContents();
-
-	cout << "He attempts to steal...";
-	hisStuff.grab(sword, myStuff);
-
-	cout << "My contents: ";
-	myStuff.search(sword);
-	myStuff.printContents();
-
-	cout << "His contents: ";
-	hisStuff.printContents();
+	cout << look(mySpace.left) << endl;
+	cout << look(mySpace.right) << endl;
 
 	cin.get();
 	return 0;
 }
+
+std::string look(Space* location) {
+
+	if (location == nullptr)
+		return ("You see a cold hard wall");
+	else {
+		return location->longDescription();
+	}
+}
+

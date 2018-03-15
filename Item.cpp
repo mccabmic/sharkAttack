@@ -16,13 +16,16 @@ void wallet::search(item myThing) {
 	}
 }
 
-void wallet::printContents() {
+std::string wallet::printContents() {
+	std::string returnString = "";
+
 	if (!isEmpty()) {
 		for (auto i : items) {
-			std::cout << i.description << " ";
+			returnString += i.description + " ";
 		}
 	}
-	std::cout << std::endl;
+
+	return returnString;
 }
 
 item wallet::removefromWallet() {

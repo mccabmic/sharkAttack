@@ -32,7 +32,7 @@ public:
 	bool isEmpty() { return items.size() == 0; }
 	void grab(item thingIwant, wallet& otherGuy);
 
-	void printContents();
+	std::string printContents();
 
 	wallet() : capacity(10) {}
 	wallet(int size) : capacity(size) {}
