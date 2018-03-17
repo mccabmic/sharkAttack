@@ -17,7 +17,7 @@ std::string Space::shortDescription() {
 		returnString += "\nYou see nothing of value";
 	}
 	else {
-		returnString += "\nYou see: " + roomContents.printContents();
+		returnString += "\nYou see something interesting that way";
 	}
 	return returnString;
 }

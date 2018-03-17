@@ -1,9 +1,7 @@
 #include <iostream>
 #include "item.hpp"
 #include "Space.hpp"
-
-
-std::string look(Space*);
+#include "Player.hpp"
 
 using namespace std;
 
@@ -13,33 +11,43 @@ int main() {
 	myStaff.description = "A cracked staff";
 	myStaff.ezID = "A staff";
 
-	Space mySpace;
+	Space mySpace("Start room", "This room is your starting location. Say hello!");
 	Space myOtherSpace("A different room", "this room smells like wet dogs and awful people");
 
 	// Set these fuckers
 	mySpace.left = &myOtherSpace;
 	myOtherSpace.right = &mySpace;
 
-	//Right now, picture a top down view where you can see literally all the rooms
-	cout << look(mySpace.left) << endl;
-	cout << look(mySpace.right) << endl;
-
-	// This will probably need to be a function as part of the mapbuilding
+	Player p(&mySpace);
+	
 	myOtherSpace.roomContents.addToWallet(myStaff);
 
-	cout << look(mySpace.left) << endl;
-	cout << look(mySpace.right) << endl;
+	cout << "Player looking inside its current location" << endl;
+	cout << p.look() << endl;
+
+	cout << "Player looking left from mySpace:" << endl;
+	cout << p.look(mySpace.left) << endl;
+
+	cout << "Player looking right from mySpace:" << endl;
+	cout << p.look(mySpace.right) << endl;
+
+	cout << "Changing rooms" << endl;
+	p.move(mySpace.up);
+
+	cout << "Player looking inside its current location" << endl;
+	cout << p.look() << endl;
+
+	cout << "Player looking left from mySpace:" << endl;
+	cout << p.look(mySpace.left) << endl;
+
+	cout << "Player looking right from mySpace:" << endl;
+	cout << p.look(mySpace.right) << endl;
+
+
+
+
 
 	cin.get();
 	return 0;
-}
-
-std::string look(Space* location) {
-
-	if (location == nullptr)
-		return ("You see a cold hard wall");
-	else {
-		return location->longDescription();
-	}
 }
 
