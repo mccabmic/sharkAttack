@@ -7,6 +7,7 @@ Game::~Game() {
 	if (mySouthSpace != nullptr) delete mySouthSpace;
 	if (myExtraSouthSpace != nullptr) delete myExtraSouthSpace;
 	if (myNorthSpace != nullptr) delete myNorthSpace;
+	if (oneMoreSpace != nullptr) delete oneMoreSpace;
 
 }
 
@@ -91,6 +92,7 @@ void Game::displayPrompts() {
 	cout << "[l] looks for exits" << endl;
 
 	cout << "[h] displays this menu" << endl;
+	cout << "[q] quits the game" << endl;
 	cout << "-------------------------------" << endl;
 
 }

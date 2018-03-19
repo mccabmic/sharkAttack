@@ -1,7 +1,8 @@
 #include <iostream>
 #include "Game.hpp"
 
-using namespace std;
+using std::string;
+
 
 int main() {
 
@@ -67,6 +68,16 @@ int main() {
 		}
 
 		else if (input == "h") {
+			myGame.displayPrompts();
+		}
+
+		else if (input == "q") {
+			cout << "Quitting..." << endl;
+			break;
+		}
+
+		else {
+			cout << "Unsupported command" << endl;
 			myGame.displayPrompts();
 		}
 
