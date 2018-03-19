@@ -1,5 +1,6 @@
 #include "Space.hpp"
 
+// Debugging
 void Space::printExits() {
 	std::cout << "This: " << this << std::endl;
 	std::cout << "Left: " << left << std::endl;
@@ -8,27 +9,14 @@ void Space::printExits() {
 	std::cout << "Down: " << down << std::endl;
 }
 
-std::string Space::shortDescription() {
-	std::string returnString = "";
-
-	returnString += quicklook;
-
-	if (roomContents.isEmpty()) {
-		returnString += "\nYou see nothing of value";
-	}
-	else {
-		returnString += "\nYou see something interesting that way";
-	}
-	return returnString;
-}
 
 std::string Space::longDescription() {
 	std::string returnString = "";
 
-	returnString += longlook;
+	returnString += roomDescription;
 
 	if (roomContents.isEmpty()) {
-		returnString += "\nYou see nothing of value";
+		returnString += "\nYou see no items of value anywhere";
 	}
 	else {
 		returnString += "\nYou see: " + roomContents.printContents();

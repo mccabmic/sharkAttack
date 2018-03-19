@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 
 struct item {
@@ -11,7 +12,6 @@ struct item {
 	std::string ezID;
 	std::string description;
 	std::string longDescription;
-	int id = 0;
 
 	// Lets me use std::find
 	bool operator==(const item& obj2) const {
@@ -25,12 +25,18 @@ private:
 	int capacity; // will eventually cap stuff
 
 public:
-	void addToWallet(item& thisItem) { thisItem.id++; items.push_back(thisItem); } // use capactity to limit the wallet size
-	void search(item myThing);
+	void addToWallet(item& thisItem);
+	bool search(item myThing);
+
 	item removefromWallet();
+	item removefromWallet(int index);
 
 	bool isEmpty() { return items.size() == 0; }
-	void grab(item thingIwant, wallet& otherGuy);
+
+	void grab(int index, wallet& otherGuy);
+	void grab(wallet& otherGuy);
+
+	int size() { return items.size(); }
 
 	std::string printContents();
 

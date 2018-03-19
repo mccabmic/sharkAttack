@@ -1,53 +1,78 @@
 #include <iostream>
-#include "item.hpp"
-#include "Space.hpp"
-#include "Player.hpp"
+#include "Game.hpp"
 
 using namespace std;
 
 int main() {
 
-	item myStaff;
-	myStaff.description = "A cracked staff";
-	myStaff.ezID = "A staff";
+	// Make player and keep track of player's location
+	Player user(10);
+	Game myGame(user);
 
-	Space mySpace("Start room", "This room is your starting location. Say hello!");
-	Space myOtherSpace("A different room", "this room smells like wet dogs and awful people");
-
-	// Set these fuckers
-	mySpace.left = &myOtherSpace;
-	myOtherSpace.right = &mySpace;
-
-	Player p(&mySpace);
+	// Handle input
+	string input;
 	
-	myOtherSpace.roomContents.addToWallet(myStaff);
+	// end game when player's dead, game will tell me when
+	do{
+		cout << "Time left: " << user.returnHP() << " steps" << endl;
+		cout << "Enter a command : ";
+		getline(cin, input);
+		
+		// Go north
+		if (input == "8") {
+			if (!myGame.movePlayer(north)) {
+				cout << "You go nowhere. Try 'l' to look around. " << endl;
+			}
+		}
 
-	cout << "Player looking inside its current location" << endl;
-	cout << p.look() << endl;
+		// Go south
+		else if (input == "2") {
+			if (!myGame.movePlayer(south)) {
+				cout << "You go nowhere. Try 'l' to look around. " << endl;
+			}
+		}
 
-	cout << "Player looking left from mySpace:" << endl;
-	cout << p.look(mySpace.left) << endl;
+		// Go west
+		else if (input == "4") {
+			if (!myGame.movePlayer(west)) {
+				cout << "You go nowhere. Try 'l' to look around. " << endl;
+			}
+		}
 
-	cout << "Player looking right from mySpace:" << endl;
-	cout << p.look(mySpace.right) << endl;
+		// Go east
+		else if (input == "6") {
+			if (!myGame.movePlayer(east)) {
+				cout << "You go nowhere. Try 'l' to look around. " << endl;
+			}
+		}
 
-	cout << "Changing rooms" << endl;
-	p.move(mySpace.up);
+		// Interact with room
+		else if (input == "e") {
+			myGame.handle_interaction();
+		}
 
-	cout << "Player looking inside its current location" << endl;
-	cout << p.look() << endl;
+		// Pickup items
+		else if (input == "p") {
+			myGame.handle_pickup();
+		}
 
-	cout << "Player looking left from mySpace:" << endl;
-	cout << p.look(mySpace.left) << endl;
+		// Look around
+		else if (input == "l") {
+			myGame.look();
+		}
+		
+		// Check inventory
+		else if (input == "i") {
+			myGame.handle_inventory();
+		}
 
-	cout << "Player looking right from mySpace:" << endl;
-	cout << p.look(mySpace.right) << endl;
+		else if (input == "h") {
+			myGame.displayPrompts();
+		}
 
-
-
+	} while (myGame.winState());
 
 
 	cin.get();
 	return 0;
 }
-

@@ -1,18 +1,25 @@
 #include "Item.hpp"
 
-void wallet::search(item myThing) {
+void wallet::addToWallet(item& thisItem) {
+	if (items.size() >= capacity) {
+		return;
+	}
+	else {
+		items.push_back(thisItem);
+	}
+}
+bool wallet::search(item myThing) {
 
-	// Just fuckin list an item with 1 2 3 4 5
 	std::vector<item>::iterator it;
 
 	it = std::find(items.begin(), items.end(), myThing);
 
 	if (it != items.end()) {
-		std::cout << it->longDescription << std::endl;
+		return true;
 	}
 
 	else {
-		std::cout << "You turn out your pockets with a stupid look on your face." << std::endl;
+		return false;
 	}
 }
 
@@ -24,28 +31,38 @@ std::string wallet::printContents() {
 			returnString += i.description + " ";
 		}
 	}
+	else
+		returnString += "nothing";
 
 	return returnString;
 }
 
 item wallet::removefromWallet() {
-		
-		// Can probably get this to remove specific thing in inventory
-		item temp= items[items.size() - 1];
-		items.pop_back();
+	item temp= items[items.size() - 1];
+	items.pop_back();
 
-		return temp;
+	return temp;
 }
 
-void wallet::grab(item myThing, wallet& otherGuy) {
+item wallet::removefromWallet(int index) {
+	item temp = items[index];
+	items.erase(items.begin() + index);
+	return temp;
+}
 
-	// Everything will have a wallet
+void wallet::grab(int index, wallet& otherGuy) {
 	if (otherGuy.isEmpty()) {
-		std::cout << "There's nothing to grab" << std::endl;
 		return;
 	}
+	item temp = otherGuy.removefromWallet(index);
+	addToWallet(temp);
 
-	std::cout << "Stole your shit!" << std::endl;
-	addToWallet(otherGuy.removefromWallet());
+}
 
+void wallet::grab(wallet& otherGuy) {
+	if (otherGuy.isEmpty()) {
+		return;
+	}
+	item temp = otherGuy.removefromWallet();
+	addToWallet(temp);
 }

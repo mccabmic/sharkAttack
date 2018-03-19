@@ -1,22 +1,23 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "Space.hpp"
-
-enum DIRECTION {up = 1, right, down, left};
+#include "Item.hpp"
 
 class Player {
 private:
 	int hp;
-	Space* currentLocation;
-	wallet Inventory = wallet(5);
+	bool win = false;
 
 public:
-	Player(Space* whereIam) : hp(15), currentLocation(whereIam) {}
-	std::string  interact() { return "I am dumb"; }
-	std::string look(Space* location);
-	std::string look();
+	wallet Inventory = wallet(5);	
+	Player(int hp): hp(hp){}
+	void takeDamage(int damage);
+	int returnHP() { return hp; }
+	void heal(int healPoints) {
+		hp += healPoints;
+	}
 
-	void move(Space* location) { currentLocation = location; }
+	void setWin() { win = true; }
+	bool getWin() { return win; }
 };
 #endif // !PLAYER_HPP
